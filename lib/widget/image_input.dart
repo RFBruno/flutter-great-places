@@ -1,15 +1,13 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart' as syspaths;
 
 class ImageInput extends StatefulWidget {
   final Function onSelectImage;
-  const ImageInput(this.onSelectImage);
+  const ImageInput(this.onSelectImage,{super.key});
 
   @override
   State<ImageInput> createState() => _ImageInputState();
@@ -19,13 +17,13 @@ class _ImageInputState extends State<ImageInput> {
   File? _storedImage;
 
   _takePicture() async {
-    final ImagePicker _picker = ImagePicker();
-    XFile imageFile = await _picker.pickImage(
+    final ImagePicker picker = ImagePicker();
+    XFile imageFile = await picker.pickImage(
       source: ImageSource.camera,
       maxWidth: 600,
     ) as XFile;
 
-    if (imageFile == null) return;
+    // if (imageFile == null) return;
 
     setState(() {
       _storedImage = File(imageFile.path);
@@ -61,7 +59,7 @@ class _ImageInputState extends State<ImageInput> {
                 )
               : const Text('Nenhum imagem!'),
         ),
-        SizedBox(
+        const SizedBox(
           width: 10,
         ),
         Expanded(

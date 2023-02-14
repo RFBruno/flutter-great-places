@@ -11,7 +11,7 @@ final tema = ThemeData(
     onError: Colors.black87,
     background: Colors.blueGrey[200]!,
     onBackground: Colors.black87,
-    surface: Color.fromARGB(255, 25, 48, 177),
+    surface: const Color.fromARGB(255, 25, 48, 177),
     onSurface: Colors.white
     
   ),

@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
         theme: tema,
         home: const PlacesListScreen(),
         routes: {
-          AppRoutes.PLACE_FORM : (context) => const PlaceFormScreen()
+          AppRoutes.placeForm  : (context) => const PlaceFormScreen()
         },
       ),
     );

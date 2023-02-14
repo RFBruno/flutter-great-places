@@ -1,8 +1,5 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:great_place/providers/great_places.dart';
 import 'package:great_place/widget/image_input.dart';
 import 'package:provider/provider.dart';
@@ -58,7 +55,7 @@ class _PlaceFormScreenState extends State<PlaceFormScreen> {
                     const SizedBox(
                       height: 10,
                     ),
-                    ImageInput(this._selectedImage)
+                    ImageInput(_selectedImage)
                   ],
                 ),
               ),
