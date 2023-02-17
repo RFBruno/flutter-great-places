@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:great_place/providers/great_places.dart';
 import 'package:great_place/widget/image_input.dart';
 import 'package:great_place/widget/location_input.dart';
-import 'package:location/location.dart';
 import 'package:provider/provider.dart';
 
 class PlaceFormScreen extends StatefulWidget {
