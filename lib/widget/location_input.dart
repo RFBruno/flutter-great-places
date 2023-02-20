@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:great_place/screens/map_screen.dart';
 import 'package:great_place/utils/location_util.dart';
 import 'package:location/location.dart';
 import 'dart:developer' as dev;
@@ -13,29 +14,33 @@ class LocationInput extends StatefulWidget {
 class _LocationInputState extends State<LocationInput> {
   String? _previewImageUrl;
 
-  Future<void> _getCurrentUserLocation() async{
-   final locData = await Location().getLocation();
-    dev.log(
-      locData.toString(),
-      name: 'Aprendendo dev log'
-    );
-    dev.inspect(
-      locData
-    );
+  Future<void> _getCurrentUserLocation() async {
+    final locData = await Location().getLocation();
 
-    final staticMapUrlImage = LocationUtil.generateLocationPreviewImage(latitude: locData.latitude!.toDouble(), longitude: locData.longitude!.toDouble());
+    final staticMapUrlImage = LocationUtil.generateLocationPreviewImage(
+        latitude: locData.latitude!.toDouble(),
+        longitude: locData.longitude!.toDouble());
 
     setState(() {
       _previewImageUrl = staticMapUrlImage;
     });
   }
 
+  Future<void> _selectOnMap() async {
+    final selectLocation = await Navigator.of(context).push(
+      MaterialPageRoute(
+        fullscreenDialog: true,
+        builder: (context) => const MapScreen(),
+      ),
+    );
+
+    if (selectLocation == null) return;
+  }
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        
         Container(
           height: 170,
           width: double.infinity,
@@ -59,9 +64,11 @@ class _LocationInputState extends State<LocationInput> {
               icon: const Icon(Icons.location_on),
               label: const Text('Localização atual'),
             ),
-            const SizedBox(width: 10,),
+            const SizedBox(
+              width: 10,
+            ),
             TextButton.icon(
-              onPressed: (){},
+              onPressed: _selectOnMap,
               icon: const Icon(Icons.map),
               label: const Text('Selecione no mapa'),
             ),
