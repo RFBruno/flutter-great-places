@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:great_place/providers/great_places.dart';
 import 'package:great_place/widget/image_input.dart';
 import 'package:great_place/widget/location_input.dart';
@@ -15,18 +16,31 @@ class PlaceFormScreen extends StatefulWidget {
 class _PlaceFormScreenState extends State<PlaceFormScreen> {
   final _titleCointroller = TextEditingController();
   File? _pickedImage;
+  LatLng? _pickedPosition;
 
   void _selectedImage(File pickedImage) {
-    _pickedImage = pickedImage;
+    setState(() {
+      _pickedImage = pickedImage;
+    });
+  }
+
+  void _selectedPosition(LatLng pickedPosition) {
+    setState(() {
+      _pickedPosition = pickedPosition;
+    });
+  }
+
+  bool _isValidForm() {
+    return _titleCointroller.text.isNotEmpty &&
+        _pickedImage != null &&
+        _pickedPosition != null;
   }
 
   void _submitForm() {
-    if (_titleCointroller.text.isEmpty || _pickedImage == null) return;
+    if (!_isValidForm()) return;
 
-    Provider.of<GreatPlaces>(context, listen: false).addPlace(
-      _titleCointroller.text,
-      _pickedImage!,
-    );
+    Provider.of<GreatPlaces>(context, listen: false)
+        .addPlace(_titleCointroller.text, _pickedImage!, _pickedPosition!);
 
     Navigator.of(context).pop();
   }
@@ -57,17 +71,17 @@ class _PlaceFormScreenState extends State<PlaceFormScreen> {
                       height: 10,
                     ),
                     ImageInput(_selectedImage),
-                     const SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
-                    const LocationInput()
+                    LocationInput(onSelectPosition: _selectedPosition)
                   ],
                 ),
               ),
             ),
           ),
           ElevatedButton.icon(
-            onPressed: _submitForm,
+            onPressed: _isValidForm() ? _submitForm : null,
             icon: const Icon(Icons.add),
             label: const Text('Adicionar'),
             style: ElevatedButton.styleFrom(

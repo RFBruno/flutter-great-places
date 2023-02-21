@@ -13,7 +13,7 @@ class DbUtil {
       version: 1,
       onCreate :(db, vesion) {
         return db.execute(
-          'CREATE TABLE places (id TEXT PRIMARY KEY, title TEXT, image TEXT)'
+          'CREATE TABLE places (id TEXT PRIMARY KEY, title TEXT, image TEXT, lat REAL, lng REAL, address TEXT)'
         );
       },
     );
